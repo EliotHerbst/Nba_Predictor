@@ -4,6 +4,9 @@ import urllib.request
 import time
 from bs4 import BeautifulSoup
 
+# PART 1
+
+
 # Advance a month
 def nextMonth(month):
     months = ["january","february","march","april","may","june","july","august","september","october","november","december"]
@@ -13,12 +16,14 @@ def nextMonth(month):
         return months[months.index(month)+1]
     
 def makeUrlBBallRef(month, year):
+    # cycle through various years and mos
     return 'https://www.basketball-reference.com/leagues/NBA_' + str(year) + '_games-' + month + '.html'
     
-
+# Baseline start at 2009, because starting off with first 10 years
 year = 2009
 month = "october"
 while year < 2019:
+    # 2012 was an oddball year
     if year == 2012:
         year = 2013
     
@@ -40,4 +45,4 @@ source = urllib.request.urlopen(
 soup = BeautifulSoup(source,'lxml')
 
 print(soup.title)
-print("tacococococ")
+print("Part 1: URL scraping works")
