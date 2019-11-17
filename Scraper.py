@@ -18,7 +18,22 @@ class Game(object):
 
 Games = []
 
-
+def writeGamesToFile():
+    File_object = open("GameData.txt","w")
+    lines = []
+    for x in range(0, len(Games)):
+        game = Games[x]
+        line = ''
+        line = line + str(game.date) + ','
+        line = line + str(game.visitor) + ',' + str(game.home) + ','
+        line = line + str(game.visitorScore) + ',' + str(game.homeScore) + ','
+        line = line + str(game.OT) + ":"
+        line = line + '{}'
+        lines.append(line)
+        
+    File_object.writelines(lines)
+    File_object.close()
+        
 
 def makeUrlBBallRef(month, year):
     return 'https://www.basketball-reference.com/leagues/NBA_' + str(year) + '_games-' + month + '.html'
@@ -52,14 +67,13 @@ def add(input):
     OT = getText(soup.find('tbody').select('td[data-stat="overtimes"]'))
     for x in range(0, len(date)):
         Games.append(Game(visitor[x],home[x],date[x],visitorScore[x],homeScore[x],OT[x]))
-    print(str(Games[len(Games) -1]))
     
     
     
 # Baseline start at 2009, because starting off with first 10 years
 year = 2009
 month = "october"
-while year < 2019:
+while year < 2020:
     # 2012 was an oddball year
     if year == 2012:
         year = 2013
@@ -70,6 +84,9 @@ while year < 2019:
     if month == 'may':
         year = year + 1
         month = 'october'
+        
+writeGamesToFile();
+print('done')
         
 
         
