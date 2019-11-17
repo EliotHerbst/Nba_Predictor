@@ -85,7 +85,7 @@ while year < 2020:
         year = year + 1
         month = 'october'
         
-writeGamesToFile();
+writeGamesToFile()
 print('done')
         
 
