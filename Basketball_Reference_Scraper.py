@@ -2,23 +2,12 @@
 import urllib.request
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
+from game import Game
 
-class Game(object):
-  def __init__(self, visitor, home, date, visitorScore, homeScore, OT):
-    self.visitor = visitor
-    self.home = home
-    self.date = date
-    self.visitorScore = visitorScore
-    self.homeScore = homeScore
-    self.OT = OT  
-  def __str__(self):
-      return str(self.visitor) + " " + str(self.visitorScore) + " " + str(self.home) + " " + str(self.homeScore) + " " + str(self.date) + " " + str(self.OT)
-
-
-# PART 1
-
+#Variables
 Games = []
 
+#Methods
 def writeGamesToFile():
     File_object = open("GameData.txt","w")
     lines = []
@@ -70,25 +59,21 @@ def add(input):
         Games.append(Game(visitor[x],home[x],date[x],visitorScore[x],homeScore[x],OT[x]))
     
     
-    
-# Baseline start at 2009, because starting off with first 10 years
+#Content
 year = 2000
 month = "october"
 while year < 2020:
-    # 2012 was an oddball year
     print(year, month)
     try: 
         source = urllib.request.urlopen(
         makeUrlBBallRef(month, year)).read()
         add(source)
     except urllib.error.HTTPError:
-        pass
-        
+        pass       
     month = nextMonth(month)
     if month == 'may':
         year = year + 1
-        month = 'october'
-        
+        month = 'october'       
 writeGamesToFile()
 print('done')
         
