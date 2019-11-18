@@ -1,5 +1,6 @@
 # Import libraries
 import urllib.request
+from urllib.error import HTTPError
 from bs4 import BeautifulSoup
 
 class Game(object):
@@ -71,24 +72,38 @@ def add(input):
     
     
 # Baseline start at 2009, because starting off with first 10 years
-year = 2009
+year = 2000
 month = "october"
 while year < 2020:
     # 2012 was an oddball year
+<<<<<<< HEAD:Scraper.py
     if year == 2012:
         
 
         year = 2013
     source = urllib.request.urlopen(
+=======
+    print(year, month)
+    try: 
+        source = urllib.request.urlopen(
+>>>>>>> 885a63c5258effbcfdbc6a55035fe48557ec9e6e:Basketball_Reference_Scraper.py
         makeUrlBBallRef(month, year)).read()
-    add(source)
+        add(source)
+    except urllib.error.HTTPError:
+        pass
+        
     month = nextMonth(month)
     if month == 'may':
         year = year + 1
         month = 'october'
         
+<<<<<<< HEAD:Scraper.py
 #writeGamesToFile()
 # print('done')
+=======
+writeGamesToFile()
+print('done')
+>>>>>>> 885a63c5258effbcfdbc6a55035fe48557ec9e6e:Basketball_Reference_Scraper.py
         
 
         
