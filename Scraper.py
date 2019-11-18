@@ -76,6 +76,8 @@ month = "october"
 while year < 2020:
     # 2012 was an oddball year
     if year == 2012:
+        
+
         year = 2013
     source = urllib.request.urlopen(
         makeUrlBBallRef(month, year)).read()
@@ -85,8 +87,8 @@ while year < 2020:
         year = year + 1
         month = 'october'
         
-writeGamesToFile();
-print('done')
+#writeGamesToFile()
+# print('done')
         
 
         
