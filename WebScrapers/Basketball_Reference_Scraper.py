@@ -5,10 +5,13 @@ from bs4 import BeautifulSoup
 from game import Game
 
 # PART 1
+# Make array for Game to be stored
 Games = []
+
 def writeGamesToFile():
     File_object = open("GameData.txt","w")
     lines = []
+    # Make string representation
     for x in range(0, len(Games)):
         game = Games[x]
         line = ''
@@ -18,7 +21,7 @@ def writeGamesToFile():
         line = line + str(game.OT) + ":"
         line = line + '{}'
         lines.append(line)
-        
+    # Close the file
     File_object.writelines(lines)
     File_object.close()
         
@@ -27,10 +30,13 @@ def makeUrlBBallRef(month, year):
 # Advance a month
 def nextMonth(month):
     months = ["january","february","march","april","may","june","july","august","september","october","november","december"]
+    # Move to next year
     if months.index(month) == 11:
         return "january"
     else:
         return months[months.index(month)+1]
+
+# Grabbing text in between any html tags and turn it into a BeautifulSoup object
 def getText(list):
     texts = []
     for string in list:
@@ -54,11 +60,13 @@ def add(input):
         Games.append(Game(visitor[x],home[x],date[x],visitorScore[x],homeScore[x],OT[x]))
     
 
-
+# For now, starting with year 2000, could change later
 year = 2000
 month = "october"
+# Still in current season
 while year < 2020:
     print(year, month)
+    # If a year or something doesn't exist, then throw an error and then just skip it
     try: 
         source = urllib.request.urlopen(
         makeUrlBBallRef(month, year)).read()
@@ -69,6 +77,6 @@ while year < 2020:
     if month == 'may':
         year = year + 1
         month = 'october'
-        
+
 writeGamesToFile()
-print('done')
+print('Completed scrape')
