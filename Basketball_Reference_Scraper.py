@@ -4,10 +4,8 @@ from urllib.error import HTTPError
 from bs4 import BeautifulSoup
 from game import Game
 
-#Variables
+# PART 1
 Games = []
-
-#Methods
 def writeGamesToFile():
     File_object = open("GameData.txt","w")
     lines = []
@@ -24,10 +22,8 @@ def writeGamesToFile():
     File_object.writelines(lines)
     File_object.close()
         
-
 def makeUrlBBallRef(month, year):
     return 'https://www.basketball-reference.com/leagues/NBA_' + str(year) + '_games-' + month + '.html'
-
 # Advance a month
 def nextMonth(month):
     months = ["january","february","march","april","may","june","july","august","september","october","november","december"]
@@ -35,11 +31,10 @@ def nextMonth(month):
         return "january"
     else:
         return months[months.index(month)+1]
-
 def getText(list):
     texts = []
     for string in list:
-        soupy = BeautifulSoup((str("<html>") + str(string) + str("</html>")))
+        soupy = BeautifulSoup((str("<html>") + str(string) + str("</html>")), 'html.parser')
         text = soupy.get_text()
         texts.append(text)
     return texts
@@ -48,7 +43,7 @@ def getText(list):
 def add(input):
     
     #Create Beautiful Soup of the Website
-    soup = BeautifulSoup(input)
+    soup = BeautifulSoup(input, 'html.parser')
     date = getText(soup.find('tbody').select('th[data-stat="date_game"]'))
     visitor = getText(soup.find('tbody').select('td[data-stat="visitor_team_name"]'))
     home = getText(soup.find('tbody').select('td[data-stat="home_team_name"]'))
@@ -58,8 +53,8 @@ def add(input):
     for x in range(0, len(date)):
         Games.append(Game(visitor[x],home[x],date[x],visitorScore[x],homeScore[x],OT[x]))
     
-    
-#Content
+
+
 year = 2000
 month = "october"
 while year < 2020:
@@ -69,16 +64,11 @@ while year < 2020:
         makeUrlBBallRef(month, year)).read()
         add(source)
     except urllib.error.HTTPError:
-        pass       
+        pass
     month = nextMonth(month)
     if month == 'may':
         year = year + 1
-        month = 'october'       
+        month = 'october'
+        
 writeGamesToFile()
 print('done')
-        
-
-        
-
-    
-
