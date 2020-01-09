@@ -10,6 +10,11 @@ import urllib.request
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
 
+source = urllib.request.urlopen(
+        "https://stats.nba.com/teams/traditional/?sort=W_PCT&dir=-1").read()
+soup = BeautifulSoup(source, 'html.parser')
+
+print(soup)
 
     
-File_object = open("GameData.txt","w")
+#File_object = open("GameData.txt","w")
