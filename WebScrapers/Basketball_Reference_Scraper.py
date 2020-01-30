@@ -3,6 +3,8 @@ import urllib.request
 from urllib.error import HTTPError
 from bs4 import BeautifulSoup
 from game import Game
+from NBA_COM_Parser import getUrl
+from NBA_COM_Parser import getStats
 
 # PART 1
 # Make array for Game to be stored
@@ -57,7 +59,11 @@ def add(input):
     homeScore = getText(soup.find('tbody').select('td[data-stat="home_pts"]'))
     OT = getText(soup.find('tbody').select('td[data-stat="overtimes"]'))
     for x in range(0, len(date)):
-        Games.append(Game(visitor[x],home[x],date[x],visitorScore[x],homeScore[x],OT[x]))
+        g = Game(visitor[x],home[x],date[x],visitorScore[x],homeScore[x],OT[x])
+        Games.append(g)
+        getStats(g)
+        break
+        
     
 
 # For now, starting with year 2000, could change later
@@ -65,7 +71,7 @@ year = 2000
 month = "october"
 # Still in current season
 while year < 2020:
-    print(year, month)
+    #print(year, month)
     # If a year or something doesn't exist, then throw an error and then just skip it
     try: 
         source = urllib.request.urlopen(
