@@ -9,6 +9,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.expected_conditions import presence_of_element_located
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver import DesiredCapabilities
+from selenium.webdriver.support import expected_conditions as EC
 import os
 
 
@@ -36,6 +37,7 @@ def get_url(date):
     url1 = "https://stats.nba.com/teams/advanced/?sort=TEAM_NAME&dir=1&" + "Season=" + get_season(
         date) + "&SeasonType=Regular%20Season"
     url1 = url1 + "&DateFrom=" + date + "&DateTo=" + date
+    print(url1)
     return url1
 
 
@@ -44,11 +46,18 @@ def get_stats(date):
     path_to_chromedriver = 'D:\Downloads\chromedriver_win32\chromedriver.exe'  # Path to access a chrome driver
     browser = webdriver.Chrome(executable_path=path_to_chromedriver)
     browser.get(url)
-    # wait = WebDriverWait(browser, 10)
+    try:
+        wait = WebDriverWait(browser, 10)
+        wait.until(EC.presence_of_element_located((By.CLASS_NAME, "nba-stat-table__overflow")))
+    except selenium.common.exceptions.TimeoutException:
+        browser.quit()
+        print("timeout")
+        return "101"
     try:
         table = browser.find_element_by_class_name('nba-stat-table__overflow')
     except selenium.common.exceptions.NoSuchElementException:
-        browser.close()
+        browser.quit()
+        print("error")
         return "101"
     team_names = []
     team_stats = []
@@ -77,7 +86,7 @@ def get_stats(date):
         for y in range(0, len(teamStats)):
             date_string += str(teamStats[y]) + ","
         date_string = date_string[0:-1] + "}"
-    browser.close()
+    browser.quit()
     return date_string
 
 
@@ -112,7 +121,7 @@ def get_days_to(date):
 end_date = "2%2F21%2F2020"
 
 # inclusive
-start_date = "10%2F26%2F2010"
+start_date = "10%2F16%2F2018"
 
 start_time = datetime.now()
 while start_date != end_date:
