@@ -1,16 +1,9 @@
 import selenium
 from selenium import webdriver
 from datetime import datetime
-
-from selenium.webdriver.chrome.webdriver import WebDriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support.expected_conditions import presence_of_element_located
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver import DesiredCapabilities
 from selenium.webdriver.support import expected_conditions as EC
-import os
 
 
 def write_to_file(st):
@@ -22,13 +15,12 @@ def write_to_file(st):
 
 # Gets NBA.com season url format for season from date
 def get_season(string):
-    month = string[0:string.index("%2F")]
-    year = int(string[string.rindex("%2F") + 3:])
-    mon = int(month)
+    mon = int(string[0:string.index("%2F")])
+    yr = int(string[string.rindex("%2F") + 3:])
     if mon > 8:
-        return str(year) + "-" + str(year + 1)[2:]
+        return str(yr) + "-" + str(yr + 1)[2:]
     else:
-        return str(year - 1) + "-" + str(year)[2:]
+        return str(yr - 1) + "-" + str(yr)[2:]
 
 
 # Returns url
@@ -36,9 +28,7 @@ def get_season(string):
 def get_url(date):
     url1 = "https://stats.nba.com/teams/advanced/?sort=TEAM_NAME&dir=1&" + "Season=" + get_season(
         date) + "&SeasonType=Regular%20Season"
-    url1 = url1 + "&DateFrom=" + date + "&DateTo=" + date
-    print(url1)
-    return url1
+    return url1 + "&DateFrom=" + date + "&DateTo=" + date
 
 
 def get_stats(date):

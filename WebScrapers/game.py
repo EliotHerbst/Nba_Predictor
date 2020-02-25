@@ -1,4 +1,3 @@
-
 # Pulled out object from scraper file to reference for later
 class Game(object):
   def __init__(self, visitor, home, date, visitorScore, homeScore, OT):
