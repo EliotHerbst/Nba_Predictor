@@ -10,7 +10,7 @@ Games = []
 
 
 def writeGamesToFile():
-    File_object = open("GameData.txt", "a")
+    File_object = open("GameDataTesting.txt", "a")
     lines = []
     # Make string representation
     for x in range(0, len(Games)):
@@ -23,6 +23,8 @@ def writeGamesToFile():
         line = line + '{}'
         lines.append(line)
     # Close the file
+    print(Games)
+    print(lines)
     File_object.writelines(lines)
     File_object.close()
 
@@ -61,19 +63,22 @@ def add(input):
     visitorScore = getText(soup.find('tbody').select('td[data-stat="visitor_pts"]'))
     homeScore = getText(soup.find('tbody').select('td[data-stat="home_pts"]'))
     OT = getText(soup.find('tbody').select('td[data-stat="overtimes"]'))
-
+    print(len(date))
     for x in range(0, len(date)):
         g = Game(visitor[x], home[x], date[x], visitorScore[x], homeScore[x], OT[x])
-        Games.append(g)
-        break
+        if g.visitorScore == "" or g.homeScore == "":
+            pass
+        else:
+            print(x)
+            Games.append(g)
 
 
 # For now, starting with year 2000, could change later
-year = 2018
+year = 2020
 month = "october"
 # Still in current season
-while year < 2020:
-    # print(year, month)
+while month != "march":
+    print(year, month)
     # If a year or something doesn't exist, then throw an error and then just skip it
     try:
         source = urllib.request.urlopen(

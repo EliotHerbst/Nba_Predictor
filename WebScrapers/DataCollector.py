@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 
 def write_to_file(st):
-    File_Object = open("AdvancedDataByDate.txt", "a")
+    File_Object = open("AdvancedDataTesting.txt", "a")
     File_Object.write(st + "\n")
     print(st)
     File_Object.close()
@@ -108,10 +108,10 @@ def get_days_to(date):
 
 
 # exclusive
-end_date = "2%2F21%2F2020"
+end_date = "2%2F24%2F2020"
 
 # inclusive
-start_date = "10%2F16%2F2018"
+start_date = "10%2F16%2F2019"
 
 start_time = datetime.now()
 while start_date != end_date:

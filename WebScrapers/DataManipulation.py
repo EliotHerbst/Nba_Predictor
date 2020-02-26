@@ -1,3 +1,5 @@
+import random
+
 from game import Game
 
 
@@ -61,7 +63,7 @@ def game_filter(game):
 
 
 def get_last_n(n, date, team_name):
-    reserved_game_date = open('AdvancedDataByDataReversed.txt', "r")
+    reserved_game_date = open('AdvancedDataTestingReversed.txt', "r")
     return_string = ""
     lines = reserved_game_date.readlines()
     reserved_game_date.close()
@@ -70,11 +72,10 @@ def get_last_n(n, date, team_name):
         line_date = line[0: line.index("{")]
         season = get_season(line_date)
         if line_date == date:
-            print(date)
             stats = []
             if x + n <= len(lines):
                 for z in range(x+1, x + n):
-                    sub_line = lines[x]
+                    sub_line = lines[z]
                     sub_line_date = sub_line[0: sub_line.index("{")]
                     if get_season(sub_line_date) != season:
                         break
@@ -89,7 +90,7 @@ def get_last_n(n, date, team_name):
 
             else:
                 for z in range(x+1, len(lines)):
-                    sub_line = lines[x]
+                    sub_line = lines[z]
                     sub_line_date = sub_line[0: sub_line.index("{")]
                     if get_season(sub_line_date) != season:
                         break
@@ -119,8 +120,9 @@ def get_last_n(n, date, team_name):
 
 # n is the number of previous days to take into account
 def create_training_data(n):
-    Game_Data = open("GameData.txt", "r")
-    Training_File = open("TrainingData" + str(n) + ".txt", "a")
+    Game_Data = open("GameDataTesting.txt", "r")
+    Training_File = open("TrainingDataTest" + str(n) + ".txt", "a")
+    # Training_File = open("TestingData20.csv", "a")
     line = Game_Data.readlines()
     lines = line[0].split(":{}")
     games = []
@@ -151,19 +153,20 @@ def create_training_data(n):
             winner = 1
         else:
             winner = 0
-
+        Training_File_Lines = []
         home_string = str(last_n_home)
         away_string = str(last_n_away)
         if home_string is not None and away_string is not None:
             file_string = home_string + "," + away_string + "," + str(winner) + "\n"
             if file_string.find("None") == -1:
-                Training_File.write(file_string)
+                Training_File_Lines.append(file_string)
         else:
             pass
-
+        random.shuffle(Training_File_Lines)
+        Training_File.writelines(Training_File_Lines)
     Game_Data.close()
     Training_File.close()
 
 
-# reverse_file("AdvancedDataByDate.txt", "AdvancedDataByDataReversed.txt")
+#reverse_file("AdvancedDataTesting.txt", "AdvancedDataTestingReversed.txt")
 create_training_data(20)
