@@ -73,7 +73,7 @@ def get_last_n(n, date, team_name):
             print(date)
             stats = []
             if x + n <= len(lines):
-                for z in range(x, x + n):
+                for z in range(x+1, x + n):
                     sub_line = lines[x]
                     sub_line_date = sub_line[0: sub_line.index("{")]
                     if get_season(sub_line_date) != season:
@@ -88,7 +88,7 @@ def get_last_n(n, date, team_name):
                         pass
 
             else:
-                for z in range(x, len(lines)):
+                for z in range(x+1, len(lines)):
                     sub_line = lines[x]
                     sub_line_date = sub_line[0: sub_line.index("{")]
                     if get_season(sub_line_date) != season:
@@ -166,4 +166,4 @@ def create_training_data(n):
 
 
 # reverse_file("AdvancedDataByDate.txt", "AdvancedDataByDataReversed.txt")
-#create_training_data(1)
+create_training_data(20)
