@@ -74,8 +74,13 @@ def get_last_n(n, date, team_name):
         if line_date == date:
             stats = []
             if x + n <= len(lines):
+<<<<<<< HEAD
                 for z in range(x+1, x + n):
                     sub_line = lines[z]
+=======
+                for z in range(x, x + n):
+                    sub_line = lines[x]
+>>>>>>> parent of a6c8e33... First CNN complete 99.35 accuracy over
                     sub_line_date = sub_line[0: sub_line.index("{")]
                     if get_season(sub_line_date) != season:
                         break
@@ -89,8 +94,13 @@ def get_last_n(n, date, team_name):
                         pass
 
             else:
+<<<<<<< HEAD
                 for z in range(x+1, len(lines)):
                     sub_line = lines[z]
+=======
+                for z in range(x, len(lines)):
+                    sub_line = lines[x]
+>>>>>>> parent of a6c8e33... First CNN complete 99.35 accuracy over
                     sub_line_date = sub_line[0: sub_line.index("{")]
                     if get_season(sub_line_date) != season:
                         break
@@ -168,5 +178,10 @@ def create_training_data(n):
     Training_File.close()
 
 
+<<<<<<< HEAD
 #reverse_file("AdvancedDataTesting.txt", "AdvancedDataTestingReversed.txt")
 create_training_data(20)
+=======
+# reverse_file("AdvancedDataByDate.txt", "AdvancedDataByDataReversed.txt")
+#create_training_data(1)
+>>>>>>> parent of a6c8e33... First CNN complete 99.35 accuracy over

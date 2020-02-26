@@ -13,6 +13,10 @@ X_Test = data_set[:, 0:28]
 Y_Test = data_set[:, 28]
 X_secondary_Test = testing_set[:, 0:28]
 Y_secondary_Test = testing_set[:, 28]
+dataset = loadtxt('TrainingData1.csv', delimiter=',')
+# split into input (X) and output (y) variables
+X = dataset[:,0:28]
+y = dataset[:,28]
 # define the keras model
 model = Sequential()
 model.add(Dense(12, input_dim=28, activation='relu'))
@@ -45,3 +49,7 @@ for x in range(len(new_predictions)):
 print(str(correct) + " " + str(incorrect) + " " + str(100 * correct / (correct + incorrect)))
 for i in range(10):
 	print('%s => %d (expected %d)' % (X_secondary_Test[i].tolist(), new_predictions[i], Y_secondary_Test[i]))
+predictions = model.predict_classes(X)
+# summarize the first 5 cases
+for i in range(5):
+	print('%s => %d (expected %d)' % (X[i].tolist(), predictions[i], y[i]))
